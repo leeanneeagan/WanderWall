@@ -5,7 +5,7 @@ const MongoClient = require('mongodb').MongoClient
 
 var db, collection;
 
-const url = "mongodb+srv://demo:demo@cluster0-q2ojb.mongodb.net/test?retryWrites=true";
+const url = "mongodb+srv://leeanneeagan_db_user:CMiPNeveUCgGPB1A@cluster0.widu55j.mongodb.net/?appName=Cluster0";
 const dbName = "demo";
 
 app.listen(3000, () => {
@@ -43,6 +43,22 @@ app.put('/messages', (req, res) => {
   .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
     $set: {
       thumbUp:req.body.thumbUp + 1
+    
+    }
+  }, {
+    sort: {_id: +1},
+    upsert: true
+  }, (err, result) => {
+    if (err) return res.send(err)
+    res.send(result)
+  })
+})
+
+app.put('/down', (req, res) => {
+  db.collection('messages')
+  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
+    $set: {
+      thumbUp:req.body.thumbUp - 1
     }
   }, {
     sort: {_id: -1},
