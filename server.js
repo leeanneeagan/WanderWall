@@ -5,8 +5,8 @@ const MongoClient = require('mongodb').MongoClient
 
 var db, collection;
 
-const url = "mongodb+srv://leeanneeagan_db_user:CMiPNeveUCgGPB1A@cluster0.widu55j.mongodb.net/?appName=Cluster0";
-const dbName = "demo";
+const url = "mongodb+srv://leeanneeagan_db_user:lW9mzmaTlUQyRY9Z@cluster0.widu55j.mongodb.net/wanderwall?appName=Cluster0";
+const dbName = "wanderwall";
 
 app.listen(3000, () => {
     MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
