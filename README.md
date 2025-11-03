@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # WanderWall 🌍
 *Not All Who Wander Are Lost 🌏*
 
@@ -54,7 +54,7 @@ This project uses MongoDB to store destinations ✨. The database is hosted on R
 
 ## 🌐 Live Demo 🌍
 
-wanderwall-1.onrender.com
+(https://wanderwall-1.onrender.com/)
 
 ---
 
