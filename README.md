@@ -1,3 +1,10 @@
+---
+
+## 📸 Screenshots 🖼️
+
+![Alt text](img/ww.png)
+
+---
 
 # WanderWall 🌍
 *Not All Who Wander Are Lost 🌏*
@@ -56,13 +63,9 @@ This project uses MongoDB to store destinations ✨. The database is hosted on R
 
 (https://wanderwall-1.onrender.com/)
 
----
-
-## 📸 Screenshots 🖼️
-
-![Alt text](img/ww.png)
 
 ---
 
 ## 📜 License 📝
 This project is licensed under the MIT License.
+
