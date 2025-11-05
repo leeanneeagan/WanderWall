@@ -1,7 +1,4 @@
 ---
-
-## 📸 Screenshots 🖼️
-
 ![Alt text](img/ww.png)
 
 ---
@@ -11,7 +8,7 @@
 
 ---
 
-## 📥 Installation
+## Installation
 
 Clone the repository and install dependencies:
 
@@ -22,7 +19,7 @@ npm install
 ```
 ---
 
-## ⚙️ Environment Variables 🔑
+## Environment Variables 
 Create a .env file in the root directory with the following variables:
 ```
 MONGO_URI=<Your MongoDB connection string>
@@ -32,7 +29,7 @@ PORT=3000
 
 ---
 
-## 🏃‍♀️ Running the App 🌎
+##  Running the App 
 Start the server:
 ```
 npm start
@@ -45,27 +42,28 @@ Open your browser and navigate to:
 
 ---
 
-## 💾 Database 🗄️
-This project uses MongoDB to store destinations ✨. The database is hosted on Render for reliable access. Connection is handled securely via environment variables 🔒.
+##  Database 
+This project uses MongoDB to store destinations . The database is hosted on Render for reliable access. Connection is handled securely via environment variables .
 
 ---
 
-## 🖥 Tech Stack 🌏
+## Tech Stack 
 
-- HTML 📄
-- Node.js / Express ⚡
-- MongoDB 🍃
-- Render (Database hosting ☁️)
+- HTML 
+- Node.js / Express 
+- MongoDB 
+- Render (Database hosting )
 
 ---
 
-## 🌐 Live Demo 🌍
+##  Live Demo 
 
 (https://wanderwall-1.onrender.com/)
 
 
 ---
 
-## 📜 License 📝
+##  License 
 This project is licensed under the MIT License.
+
 
