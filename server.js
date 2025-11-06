@@ -3,9 +3,6 @@
 // All final code and design choices were reviewed, tested, and implemented by the author.
 //  -->
 
-
-
-
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
@@ -16,13 +13,33 @@ var db, collection;
 const url = "mongodb+srv://leeanneeagan_db_user:lW9mzmaTlUQyRY9Z@cluster0.widu55j.mongodb.net/wanderwall?appName=Cluster0";
 const dbName = "wanderwall";
 
-app.listen(3000, () => {
-    MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
-        if(error) {
-            throw error;
-        }
-        db = client.db(dbName);
-        console.log("Connected to `" + dbName + "`!");
+/// multer is for photos addition
+const multer = require('multer')
+const path = require('path')
+
+//photo storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/') // save images in public/uploads
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname))
+  }
+})
+
+const upload = multer({ storage: storage })
+
+//connect to mongodb
+MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
+    if(error) {
+        throw error;
+    }
+    db = client.db(dbName);
+    console.log("Connected to `" + dbName + "`!");
+
+    // Start server only after DB connection
+    app.listen(3000, () => {
+        console.log('Server is running on port 3000');
     });
 });
 
@@ -38,44 +55,40 @@ app.get('/', (req, res) => {
   })
 })
 
-app.post('/messages', (req, res) => {
-  db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+app.post('/messages', upload.single('photo'), (req, res) => {
+  db.collection('messages').insertOne({
+    name: req.body.name,
+    msg: req.body.msg,
+    photo: req.file ? `/uploads/${req.file.filename}` : null // optional photo
+  }, (err, result) => {
     if (err) return console.log(err)
     console.log('saved to database')
     res.redirect('/')
   })
 })
 
+// app.post('/messages', (req, res) => {
+//   db.collection('messages').insertOne({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+//     if (err) return console.log(err)
+//     console.log('saved to database')
+//     res.redirect('/')
+//   })
+// })
+
+
+//deleted thumbs up thumbs down for PUT(update) for edit text in data base
 app.put('/messages', (req, res) => {
   db.collection('messages')
-  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    $set: {
-      thumbUp:req.body.thumbUp + 1
-    
-    }
-  }, {
-    sort: {_id: +1},
-    upsert: true
-  }, (err, result) => {
-    if (err) return res.send(err)
-    res.send(result)
-  })
+    .findOneAndUpdate(
+      { name: req.body.name, msg: req.body.oldMsg }, 
+      { $set: { msg: req.body.newMsg } },            
+      { returnDocument: 'after', upsert: false }    
+    )
+    .then(result => res.json('Message updated')) 
+    .catch(err => res.status(500).json(err))       
 })
 
-app.put('/down', (req, res) => {
-  db.collection('messages')
-  .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-    $set: {
-      thumbUp:req.body.thumbUp - 1
-    }
-  }, {
-    sort: {_id: -1},
-    upsert: true
-  }, (err, result) => {
-    if (err) return res.send(err)
-    res.send(result)
-  })
-})
+
 
 app.delete('/messages', (req, res) => {
   db.collection('messages').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
